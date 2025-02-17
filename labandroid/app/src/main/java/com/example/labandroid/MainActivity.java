@@ -24,6 +24,14 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        int res = initRng();
+        byte[] message = randomBytes(10);
+        byte[] key = {7, 6, 7, 6, 7, 6, 7, 6, 7, 6, 7, 6, 7, 6, 7, 6};
+
+        byte[] buffer;
+        buffer = encrypt(key, message);
+        buffer = decrypt(key, buffer);
+
         // Example of a call to a native method
         TextView tv = binding.sampleText;
         tv.setText(stringFromJNI());
@@ -34,4 +42,8 @@ public class MainActivity extends AppCompatActivity {
      * which is packaged with this application.
      */
     public native String stringFromJNI();
+    public static native int initRng();
+    public static native byte[] randomBytes(int no);
+    public static native byte[] encrypt(byte[] key, byte[] data);
+    public static native byte[] decrypt(byte[] key, byte[] data);
 }
