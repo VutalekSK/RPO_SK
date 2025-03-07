@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 import android.view.View;
 import android.widget.Toast;
@@ -17,8 +18,14 @@ import com.example.labandroid.databinding.ActivityMainBinding;
 
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
+import org.apache.commons.io.IOUtils;
 
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.text.DecimalFormat;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity implements TransactionEvents {
 
@@ -120,8 +127,10 @@ public class MainActivity extends AppCompatActivity implements TransactionEvents
         //    }
         //}).start();
 
-        byte[] trd = stringToHex("9F0206000000000100");
-        transaction(trd);
+        //byte[] trd = stringToHex("9F0206000000000100");
+        //transaction(trd);
+
+        testHttpClient();
     }
 
     public static byte[] stringToHex(String s)
@@ -136,6 +145,50 @@ public class MainActivity extends AppCompatActivity implements TransactionEvents
             hex = null;
         }
         return hex;
+    }
+
+    protected void testHttpClient()
+    {
+        new Thread(() -> {
+            try {
+                HttpURLConnection uc = (HttpURLConnection)
+                        (new URL("http://10.0.2.2:7070/api/v1/title").openConnection());
+                InputStream inputStream = uc.getInputStream();
+                String html = IOUtils.toString(inputStream);
+                String title = getPageTitle(html);
+                runOnUiThread(() ->
+                {
+                    Toast.makeText(this, title, Toast.LENGTH_LONG).show();
+                });
+
+            } catch (Exception ex) {
+                Log.e("fapptag", "Http client fails", ex);
+            }
+        }).start();
+    }
+
+    private String getPageTitle(String html)
+    {
+        /*
+        int pos = html.indexOf("<title");
+        String p="not found";
+        if (pos >= 0)
+        {
+            int pos2 = html.indexOf("<", pos + 1);
+            if (pos >= 0)
+                p = html.substring(pos + 7, pos2);
+        }
+        return p;
+        */
+
+        Pattern pattern = Pattern.compile("<title>(.+?)</title>", Pattern.DOTALL);
+        Matcher matcher = pattern.matcher(html);
+        String p;
+        if (matcher.find())
+            p = matcher.group(1);
+        else
+            p = "Not found";
+        return p;
     }
 
     /**
