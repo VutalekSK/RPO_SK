@@ -212,7 +212,7 @@ Java_com_example_labandroid_MainActivity_transaction(JNIEnv *xenv, jobject xthiz
             ptc--;
         }
 
-        env->ReleaseByteArrayElements(trd, (jbyte *)p, 0);
+        //env->ReleaseByteArrayElements(trd, (jbyte *)p, 0);
         //return (ptc > 0);
 
         id = env->GetMethodID(cls, "transactionResult", "(Z)V");
