@@ -1,0 +1,1 @@
+curl.exe -H "Content-Type: application/json" -d '{\"name\": \"Голландия\"}' -X PUT http://localhost:7070/api/v1/countries/1
