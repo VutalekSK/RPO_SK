@@ -1,1 +1,2 @@
 curl.exe -H "Content-Type: application/json" -d '{\"name\": \"Голландия\"}' -X POST http://localhost:7070/api/v1/countries
+curl.exe -H "Content-Type: application/json" -d '{\"name\": \"Питер Брейгель Старший\", \"century\": 16, \"country\": {\"id\": 5}}' -X POST http://localhost:7070/api/v1/artists
