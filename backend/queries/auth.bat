@@ -1,0 +1,2 @@
+curl.exe -H "Content-Type: application/json" -d '{\"login\": \"admin\", \"password\": \"qwerty\"}' -X POST http://localhost:7070/auth/login
+curl.exe -H "AUTHORIZATION: Bearer 3c122d60-7c4a-4e31-ae67-ba099121913b" -X GET http://localhost:7070/api/v1/countries
