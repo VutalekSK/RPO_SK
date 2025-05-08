@@ -37,7 +37,7 @@ export default connect()(function  Login() {
                 //     setErrorMessage("Ошибка авторизации");
                 // else
                 //     setErrorMessage(err.message);
-                // setLoggingIn(false);
+                setLoggingIn(false);
             })
         }
 
