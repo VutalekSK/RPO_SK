@@ -15,6 +15,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
 @Entity
 @Table(name = "users")
@@ -62,4 +63,7 @@ public class User {
         this.museums.remove(m);
         m.users.remove(this);
     }
+
+    @Transient
+    public String np;
 }
